@@ -1,0 +1,72 @@
+<div class="direccion" id="contacto">
+    <div class="container">
+        <div class="row justify-content-center text-left">
+            <div class="col-md-6">
+                <h4 class="titulo ">Contacto</h4>
+                <form>
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email">
+                    </div>
+                    <div class="form-group">
+                        <label for="comentario">Comentario</label>
+                        <textarea class="form-control" id="comentario" rows="3" placeholder="Comentario"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+            </div>
+            <div class="col-md-6" style="    
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 333px;">
+                <img src="/img/logo.svg" alt="logo de gabi" width="80%" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
+        const comentario = document.getElementById('comentario').value;
+
+        fetch('/contacto/add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre, email, comentario })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Enviado!',
+                        text: 'Tu mensaje ha sido enviado exitosamente.'
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.'
+                    });
+                }
+            })
+            .catch(error => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Hubo un problema al enviar tu mensaje. Inténtalo de nuevo.'
+                });
+            });
+    });
+</script>
