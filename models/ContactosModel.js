@@ -19,6 +19,10 @@ const Contacto = sequelize.define('Contacto', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    country: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     fecha: {
         type: DataTypes.STRING,
         allowNull: false,
