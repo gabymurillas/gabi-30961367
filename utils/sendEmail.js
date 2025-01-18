@@ -8,15 +8,13 @@ const options = {
 const sendEmail = (to, subject, message) => {
     console.log(to, subject, message);
     const transporter = nodemailer.createTransport({
-        host: options.host, // El host SMTP de tu proveedor
-        port: options.port, // El puerto SMTP (generalmente 587 o 465)
-        secure: false, // true para 465, false para otros puertos
+        service: "Gmail",
+        host: options.host,
+        port: options.port,
+        secure: true,
         auth: {
-            user: options.user, // Tu usuario
-            pass: options.pass // Tu contraseña
-        },
-        tls: {
-            rejectUnauthorized: false
+            user: options.user,
+            pass: options.pass
         }
     });
 
