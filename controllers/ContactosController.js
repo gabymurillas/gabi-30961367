@@ -18,7 +18,7 @@ class ContactosController {
 
         try {
             await ContactosModel.addContacto({ nombre, email, comentario, ip, country, fecha });
-            sendEmail(email, 'Un nuevo contacto guardado', `
+            sendEmail('gaby0406@gmail.com', 'Un nuevo contacto guardado', `
                 <h2>Nuevo Contacto</h2>
                 <br/>
                 <ol>
