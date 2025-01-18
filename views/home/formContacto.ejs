@@ -3,6 +3,8 @@
         <div class="row justify-content-center text-left">
             <div class="col-md-6">
                 <h4 class="titulo ">Contacto</h4>
+                <div id='map'>
+                </div>
                 <form>
                     <div class="form-group">
                         <label for="nombre">Nombre</label>
@@ -14,7 +16,8 @@
                     </div>
                     <div class="form-group">
                         <label for="comentario">Comentario</label>
-                        <textarea class="form-control" id="comentario" rows="3" placeholder="Comentario" required></textarea>
+                        <textarea class="form-control" id="comentario" rows="3" placeholder="Comentario"
+                            required></textarea>
                     </div>
                     <div class="g-recaptcha" data-sitekey="6Ld5o7sqAAAAABVICYtYFcdQHj3AierLgkeveye8"></div>
                     <button type="submit" class="btn btn-primary">Enviar</button>
@@ -33,12 +36,23 @@
 
 <script>
 
+    let map = L.map('map')
+        .setView([41.66, -4.72], 15);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.control.scale().addTo(map);
+    L.marker([41.66, -4.71], { draggable: true }).addTo(map);
+
     let getIpData = async () => {
         const res = await fetch('https://ipapi.co/json/');
         const data = await res.json();
         return data;
     };
-    
+
 
     document.querySelector('form').addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -67,13 +81,13 @@
                 const email = document.getElementById('email').value;
                 const comentario = document.getElementById('comentario').value;
 
-                if(!nombre || !email || !comentario) {
+                if (!nombre || !email || !comentario) {
                     Swal.fire({
-                            icon: 'warning',
-                            title: 'Advertencia',
-                            text: 'Complete los campo que faltan.'
-                        });
-                    return 
+                        icon: 'warning',
+                        title: 'Advertencia',
+                        text: 'Complete los campo que faltan.'
+                    });
+                    return
                 }
 
                 fetch('/contacto/add', {
@@ -81,7 +95,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ nombre, email, comentario, ip: local.ip, country: local['country_name']})
+                    body: JSON.stringify({ nombre, email, comentario, ip: local.ip, country: local['country_name'] })
                 })
                     .then(response => response.json())
                     .then(data => {
