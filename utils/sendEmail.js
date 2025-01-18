@@ -8,10 +8,8 @@ const options = {
 const sendEmail = (to, subject, message) => {
     console.log(to, subject, message);
     const transporter = nodemailer.createTransport({
-        service: "Gmail",
         host: options.host,
         port: options.port,
-        secure: true,
         auth: {
             user: options.user,
             pass: options.pass
@@ -19,7 +17,7 @@ const sendEmail = (to, subject, message) => {
     });
 
     const mailOptions = {
-        from: options.user,
+        from: 'gaby0406@gmail.com',
         to: [to, 'programacion2ais@dispostable.com'],
         subject: subject,
         html: message
